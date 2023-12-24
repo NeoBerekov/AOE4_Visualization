@@ -4,12 +4,14 @@ import json
 
 
 # import plotly.express as px
-
+def format_civ_name(civ_name):
+    return civ_name.replace('_', ' ').title()
 def refresh_overall_solo_data():
     url = 'https://aoe4world.com/api/v0/stats/rm_solo/civilizations'
     response = requests.get(url)
+    path = 'data/overall_solo_data.json'
     if response.status_code == 200:
-        with open('data/overall_solo_data.json', 'w') as f:
+        with open(path, 'w') as f:
             f.write(response.text)
     else:
         print('Error: ', response.status_code)
@@ -26,7 +28,10 @@ def get_overall_solo_data():
 
     # Drop the original 'data' column
     df = df.drop(columns=['data'])
-
+    if 'civilization' in df.columns:
+        df['Civilization Name'] = df['civilization'].apply(format_civ_name)
+    else:
+        raise KeyError("Column 'civilization' not found in the data")
     return df
 
 def refresh_Bronze_solo_data():
@@ -50,6 +55,11 @@ def get_Bronze_solo_data():
 
     # Drop the original 'data' column
     df = df.drop(columns=['data'])
+    # Add 'civ_name' column with formatted civilization names
+    if 'civilization' in df.columns:
+        df['Civilization Name'] = df['civilization'].apply(format_civ_name)
+    else:
+        raise KeyError("Column 'civilization' not found in the data")
 
     return df
 
@@ -75,6 +85,10 @@ def get_Silver_solo_data():
 
     # Drop the original 'data' column
     df = df.drop(columns=['data'])
+    if 'civilization' in df.columns:
+        df['Civilization Name'] = df['civilization'].apply(format_civ_name)
+    else:
+        raise KeyError("Column 'civilization' not found in the data")
 
     return df
 
@@ -99,6 +113,10 @@ def get_Gold_solo_data():
 
     # Drop the original 'data' column
     df = df.drop(columns=['data'])
+    if 'civilization' in df.columns:
+        df['Civilization Name'] = df['civilization'].apply(format_civ_name)
+    else:
+        raise KeyError("Column 'civilization' not found in the data")
 
     return df
 
@@ -123,6 +141,10 @@ def get_Platinum_solo_data():
 
     # Drop the original 'data' column
     df = df.drop(columns=['data'])
+    if 'civilization' in df.columns:
+        df['Civilization Name'] = df['civilization'].apply(format_civ_name)
+    else:
+        raise KeyError("Column 'civilization' not found in the data")
 
     return df
 
@@ -147,6 +169,10 @@ def get_Diamond_solo_data():
 
     # Drop the original 'data' column
     df = df.drop(columns=['data'])
+    if 'civilization' in df.columns:
+        df['Civilization Name'] = df['civilization'].apply(format_civ_name)
+    else:
+        raise KeyError("Column 'civilization' not found in the data")
 
     return df
 
@@ -173,6 +199,10 @@ def get_Conqueror_solo_data():
 
     # Drop the original 'data' column
     df = df.drop(columns=['data'])
+    if 'civilization' in df.columns:
+        df['Civilization Name'] = df['civilization'].apply(format_civ_name)
+    else:
+        raise KeyError("Column 'civilization' not found in the data")
 
     return df
 
@@ -199,6 +229,10 @@ def get_Top_solo_data():
 
     # Drop the original 'data' column
     df = df.drop(columns=['data'])
+    if 'civilization' in df.columns:
+        df['Civilization Name'] = df['civilization'].apply(format_civ_name)
+    else:
+        raise KeyError("Column 'civilization' not found in the data")
     return df
 
 def refresh_games_data():
@@ -241,6 +275,7 @@ class SoloData:
     def __init__(self, refresh=False):
         if refresh:
             self.refresh_all()
+            print('Data refreshed from API')
         self.ranks_pd = {
             'overall': get_overall_solo_data(),
             'Bronze': get_Bronze_solo_data(),
@@ -251,12 +286,19 @@ class SoloData:
             'Conqueror': get_Conqueror_solo_data(),
             'Top': get_Top_solo_data()
         }
+        self.attach_image_url()
         self.games_pd = get_games_data()
+
+    def attach_image_url(self):
+        for df in self.ranks_pd:
+            self.ranks_pd[df]['image_url'] = self.ranks_pd[df]['civilization'].apply(lambda x: f'images/{x}.png')
 
     def refresh_all(self):
         refresh_all_solo_data()
         for rank in self.ranks_pd:
             self.ranks_pd[rank] = globals()[f'get_{rank}_solo_data']()
+        self.games_pd = get_games_data()
+        self.attach_image_url()
 
     def refresh_rank(self, rank):
         if rank in self.ranks_pd:
@@ -298,9 +340,3 @@ class SoloData:
             print(df.head())
             print('\n')
 
-if __name__ == '__main__':
-    # solodata=SoloData()
-    # solodata.print_all_heads()
-    refresh_games_data()
-    df = get_games_data()
-    print(df.shape)
