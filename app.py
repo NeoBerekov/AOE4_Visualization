@@ -2,9 +2,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 app = Flask(__name__)
-CORS(app)
+CORS(app) # 允许跨域访问
 
-def snake_to_camel(snake_str, upper_case_first_letter=False):
+def snake_to_camel(snake_str, upper_case_first_letter=False): #
     components = snake_str.split('_')
     if upper_case_first_letter:
         # 大驼峰式（UpperCamelCase）
@@ -29,7 +29,7 @@ def get_data():
         refresh.refresh_data()
 
     # Determine the path of the json file
-    file_path = 'rank_charts_' + rank + '.json'
+    file_path = 'rank_charts/rank_charts_' + rank + '.json'
 
     # Open the file and read its content
     with open(file_path, 'r') as f:
@@ -49,7 +49,7 @@ def get_data2():
         import refresh
         refresh.refresh_data(rank)
     # Determine the path of the json file
-    file_path = 'games_count_charts_' + rank + '.json'
+    file_path = 'games_count_charts/games_count_charts_' + rank + '.json'
     # Open the file and read its content
     with open(file_path, 'r') as f:
         data = json.load(f)
