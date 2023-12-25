@@ -73,7 +73,7 @@ def draw_games_count_chart(pd, rank=None):
         y=alt.Y('start:Q',axis=alt.Axis(title="Games Count")),
         y2=alt.Y2('end:Q'),
         color=alt.condition(
-            alt.datum.win_rate >= base_value,
+            alt.datum.games_count >= base_value,
             alt.value("green"),  # Color for win rates above the baseline
             alt.value("red")  # Color for win rates below the baseline
         ),
