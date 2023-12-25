@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>AOE4 Data Visualization for All Ranks</h1>
+  <label for="rank-menu">Rank: </label>
+  <select name="ranks" id="rank-menu" onchange="updateTable(this.selectedOptions[0].getAttribute('value'), selectedOption)">
+    <option value="Overall">Overall</option>
+    <option value="Top">Top</option>
+    <option value="Conqueror">Conqueror</option>
+    <option value="Diamond">Diamond</option>
+    <option value="Platinum">Platinum</option>
+    <option value="Gold">Gold</option>
+    <option value="Silver">Silver</option>
+    <option value="Bronze">Bronze</option>
+  </select>
+
+  <div class="refresh-flag-input">
+    <div>
+      <input type="radio" id="refresh_no" name="refresh_flag" value="no" checked />
+      <label for="refresh_no">No Refresh</label>
+    </div>
+
+    <div>
+      <input type="radio" id="refresh_yes" name="refresh_flag" value="yes" />
+      <label for="refresh_yes">Refresh selected Rank</label>
+    </div>
+
+    <div>
+      <input type="radio" id="refresh_all" name="refresh_flag" value="all" />
+      <label for="refresh_all">Refresh all</label>
+    </div>
+  </div>
+
+  <div id="views"></div>
+  <div id="views2"></div>
+  <script src="./index.js"></script>
+  <script>
+      let selectedOption = document.querySelector('input[name="refresh_flag"]:checked').value;
+
+      document.querySelectorAll('input[name="refresh_flag"]').forEach(radio => {
+          radio.addEventListener('change', () => {
+              selectedOption = document.querySelector('input[name="refresh_flag"]:checked').value;
+          });
+      });
+
+      function updateTable(rank, refresh) {
+          handleWinRateFetching(rank, refresh);
+          handleGameCountFetching(rank, refresh);
+      }
+  </script>
+</body>
+
+</html>
