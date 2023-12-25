@@ -21,7 +21,7 @@ async function getGameData(rank) {
     // Attach image url to each member
     for(const game of rankData.data){
         game.image_url = 'images/' + game.civilization + '.png';
-        // 然后，把文明名称的格式转换一下
+        // Transform civilization name to camel case
         game.formattedCivName = underline2CamelCase(game.civilization);
     }
 
@@ -47,7 +47,7 @@ async function handleGameCountFetching(rank, refresh) {
     vegaEmbed('#views2', spec);
 }
 
-// 前后端分离后弃用
+// Deprecated after using flask as backend
 async function handleDataFetching(rank) {
     console.log(rank);
     const [spec, gameData] = await Promise.all([getSchema(), getGameData(rank)]);
