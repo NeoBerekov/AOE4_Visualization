@@ -4,6 +4,8 @@ import json
 app = Flask(__name__)
 CORS(app)
 
+
+
 @app.route('/api/solodata', methods=['GET'])
 def get_data():
     refresh = request.args.get('refresh',default='no', type=str).lower() == 'yes'

@@ -6,6 +6,8 @@ import pandas as pd
 import charts
 
 
+
+
 def refresh_data(rank = None):
     solodata = dp.SoloData(refresh=False)
     charts_list = {}

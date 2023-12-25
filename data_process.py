@@ -235,6 +235,8 @@ def get_Top_solo_data():
         raise KeyError("Column 'civilization' not found in the data")
     return df
 
+
+
 def refresh_games_data():
     all_games = []
     for page in range(1, 21):

@@ -5,6 +5,8 @@ import IPython
 import pandas as pd
 
 
+
+
 def draw_chart(pd,rank=None):
     # Base value for the win rate baseline
     base_value = 50
