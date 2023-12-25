@@ -57,6 +57,12 @@ def get_data2():
     # Return the content of the file as a response
     return jsonify(data)
 
+@app.route('/api/solodata/refreshAll', methods=['GET'])
+def refresh_all():
+    import refresh
+    refresh.refresh_data()
+    return 'refresh all data'
+
 if __name__ == '__main__':
     app.run(debug=True)
 
