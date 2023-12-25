@@ -268,7 +268,7 @@ def refresh_all_solo_data():
     refresh_Diamond_solo_data()
     refresh_Conqueror_solo_data()
     refresh_Top_solo_data()
-    refresh_games_data()
+    # refresh_games_data()
 
 
 class SoloData:
@@ -287,7 +287,7 @@ class SoloData:
             'Top': get_Top_solo_data()
         }
         self.attach_image_url()
-        self.games_pd = get_games_data()
+        # self.games_pd = get_games_data()
 
     def attach_image_url(self):
         for df in self.ranks_pd:
@@ -297,11 +297,12 @@ class SoloData:
         refresh_all_solo_data()
         for rank in self.ranks_pd:
             self.ranks_pd[rank] = globals()[f'get_{rank}_solo_data']()
-        self.games_pd = get_games_data()
+        # self.games_pd = get_games_data()
         self.attach_image_url()
 
     def refresh_rank(self, rank):
         if rank in self.ranks_pd:
+            globals()[f'refresh_{rank}_solo_data']()
             self.ranks_pd[rank] = globals()[f'get_{rank}_solo_data']()
         else:
             print('Wrong rank name')
