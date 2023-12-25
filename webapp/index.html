@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <!-- 通过CDN引入vega库 -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -22,7 +23,10 @@
 </head>
 
 <body>
+  <!-- 标题 -->
   <h1>AOE4 Data Visualization for All Ranks</h1>
+
+  <!-- 段位下拉选择框 -->
   <label for="rank-menu">Rank: </label>
   <select name="ranks" id="rank-menu" onchange="updateTable(this.selectedOptions[0].getAttribute('value'), selectedOption)">
     <option value="Overall">Overall</option>
@@ -35,6 +39,7 @@
     <option value="Bronze">Bronze</option>
   </select>
 
+  <!-- 刷新选项单选框 -->
   <div class="refresh-flag-input">
     <div>
       <input type="radio" id="refresh_no" name="refresh_flag" value="no" checked />
@@ -52,10 +57,13 @@
     </div>
   </div>
 
+  <!-- 两张表的元素块 -->
   <div id="views"></div>
   <div id="views2"></div>
+  <!-- 引入外部js文件 -->
   <script src="./index.js"></script>
   <script>
+      // 状态机，通过事件监听保存刷新选项
       let selectedOption = document.querySelector('input[name="refresh_flag"]:checked').value;
 
       document.querySelectorAll('input[name="refresh_flag"]').forEach(radio => {
@@ -64,6 +72,7 @@
           });
       });
 
+      // 当下拉选项框选择的内容改变时，重新获取数据
       function updateTable(rank, refresh) {
           handleWinRateFetching(rank, refresh);
           handleGameCountFetching(rank, refresh);
