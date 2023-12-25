@@ -1,0 +1,185 @@
+{
+  "config": {
+    "view": {
+      "continuousWidth": 300,
+      "continuousHeight": 300
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar"
+      },
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "(datum.win_rate >= 50)",
+            "value": "steelblue"
+          },
+          "value": "orange"
+        },
+        
+        "x": {
+          "axis": {
+            "title": "Civilization Name"
+          },
+          "field": "formattedCivName",
+          "sort": null,
+          "type": "nominal"
+        },
+        "y": {
+          "axis": {
+            "title": "Win Rate"
+          },
+          "field": "start",
+          "scale": {
+            "domain": [
+              40,
+              60
+            ]
+          },
+          "type": "quantitative"
+        },
+        "y2": {
+          "field": "end"
+        }
+      },
+      "name": "view_8",
+      "transform": [
+        {
+          "calculate": "datum.win_rate >= 50 ? 50 : datum.win_rate",
+          "as": "start"
+        },
+        {
+          "calculate": "datum.win_rate >= 50 ? datum.win_rate : 50",
+          "as": "end"
+        }
+      ]
+    },
+    {
+      "mark": {
+        "type": "image",
+        "width": 15
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "formattedCivName",
+            "title": "文明",
+            "type": "nominal"
+          },
+          {
+            "field": "win_rate",
+            "title": "胜率",
+            "type": "quantitative"
+          },
+          {
+            "field": "pick_rate",
+            "title": "上场率",
+            "type": "quantitative"
+          },
+          {
+            "field": "win_count",
+            "title": "胜场数",
+            "type": "quantitative"
+          },
+          {
+            "field": "loss_count",
+            "title": "负场数",
+            "type": "quantitative"
+          },
+          {
+            "field": "player_games_count",
+            "title": "总场数",
+            "type": "quantitative"
+          },
+          {
+            "field": "duration_median",
+            "title": "对局时长-中位数",
+            "type": "quantitative"
+          },
+          {
+            "field": "duration_average",
+            "title": "对局时长-平均值",
+            "type": "quantitative"
+          },
+          {
+            "field": "duration_maximum",
+            "title": "对局时长-最长",
+            "type": "quantitative"
+          },
+          {
+            "field": "duration_minimum",
+            "title": "对局时长-最短",
+            "type": "quantitative"
+          }
+        ],
+        "url": {
+          "field": "image_url",
+          "type": "nominal"
+        },
+        "x": {
+          "field": "formattedCivName",
+          "sort": null,
+          "type": "nominal"
+        },
+        "y": {
+          "axis": {
+            "title": "Win Rate"
+          },
+          "field": "start",
+          "scale": {
+            "domain": [
+              40,
+              60
+            ]
+          },
+          "type": "quantitative"
+        },
+        "y2": {
+          "field": "end"
+        }
+      },
+      "transform": [
+        {
+          "calculate": "datum.win_rate >= 50 ? 50 : datum.win_rate",
+          "as": "start"
+        },
+        {
+          "calculate": "datum.win_rate >= 50 ? datum.win_rate : 50",
+          "as": "end"
+        }
+      ]
+    }
+  ],
+  "params": [
+    {
+      "name": "param_8",
+      "select": {
+        "type": "interval",
+        "encodings": [
+          "x",
+          "y"
+        ]
+      },
+      "bind": "scales",
+      "views": [
+        "view_8"
+      ]
+    }
+  ],
+  "title": {
+    "text": [
+      "Civilization Win Rates"
+    ],
+    "subtitle": [
+      "in rank Top"
+    ],
+    "color": "black",
+    "fontSize": 20,
+    "subtitleFontSize": 15,
+    "anchor": "start",
+    "offset": 5
+  },
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.16.3.json"
+}
