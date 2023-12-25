@@ -289,11 +289,17 @@ class SoloData:
             'Top': get_Top_solo_data()
         }
         self.attach_image_url()
+        self.add_avg_games_count()
         # self.games_pd = get_games_data()
 
     def attach_image_url(self):
         for df in self.ranks_pd:
             self.ranks_pd[df]['image_url'] = self.ranks_pd[df]['civilization'].apply(lambda x: f'images/{x}.png')
+
+    def add_avg_games_count(self):
+        for rank, df in self.ranks_pd.items():
+            avg_games_count = df['games_count'].mean()
+            df['avg_games_count'] = avg_games_count
 
     def refresh_all(self):
         refresh_all_solo_data()
@@ -301,11 +307,13 @@ class SoloData:
             self.ranks_pd[rank] = globals()[f'get_{rank}_solo_data']()
         # self.games_pd = get_games_data()
         self.attach_image_url()
+        self.add_avg_games_count()
 
     def refresh_rank(self, rank):
         if rank in self.ranks_pd:
             globals()[f'refresh_{rank}_solo_data']()
             self.ranks_pd[rank] = globals()[f'get_{rank}_solo_data']()
+            self.attach_image_url()
         else:
             print('Wrong rank name')
 
@@ -334,8 +342,8 @@ class SoloData:
         else:
             print('Wrong rank name')
             return None
-    def get_games(self):
-        return self.games_pd
+    # def get_games(self):
+    #     return self.games_pd
 
     def print_all_heads(self):
         for rank, df in self.ranks_pd.items():
