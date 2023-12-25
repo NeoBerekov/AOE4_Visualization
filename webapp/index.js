@@ -59,7 +59,7 @@ async function handleDataFetching(rank) {
 
     if(rank === '≥conqueror_4')
         spec.title.subtitle = 'In Top'
-    else    // 首字母转大写
+    else
         spec.title.subtitle = 'In Rank ' + rank.charAt(0).toUpperCase() + rank.slice(1);
 
     vegaEmbed('#views', spec);
