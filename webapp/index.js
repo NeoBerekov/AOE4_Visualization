@@ -18,7 +18,7 @@ async function getGameData(rank) {
     const response = await fetch('https://aoe4world.com/api/v0/stats/rm_solo/civilizations?rank_level=' + rank);
     const rankData = await response.json();
 
-    // 搞到对局数据后，需要给每个成员添加文明的旗帜图片路径
+    // Attach image url to each member
     for(const game of rankData.data){
         game.image_url = 'images/' + game.civilization + '.png';
         // 然后，把文明名称的格式转换一下
@@ -47,7 +47,7 @@ async function handleGameCountFetching(rank, refresh) {
     vegaEmbed('#views2', spec);
 }
 
-// 现在是前后端分离，就不使用这个方法了
+// 前后端分离后弃用
 async function handleDataFetching(rank) {
     console.log(rank);
     const [spec, gameData] = await Promise.all([getSchema(), getGameData(rank)]);

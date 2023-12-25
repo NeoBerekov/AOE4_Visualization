@@ -5,10 +5,13 @@ import IPython
 import pandas as pd
 
 
+'''
+This module contains functions to draw win rate and games count charts for the data of given rank.
+'''
 
 
 def draw_rank_chart(pd, rank=None):
-    # Base value for the win rate baseline
+    # Base value for the win rate baseline, of course it is 50
     base_value = 50
     plot_data = pd.sort_values(by='win_rate', ascending=False)
     # Create a bar chart with bars extending from the baseline
@@ -30,7 +33,7 @@ def draw_rank_chart(pd, rank=None):
         end="datum.win_rate >= 50 ? datum.win_rate : 50"
     ).interactive()
 
-    # Create the flag image chart using the new 'image_url' column
+    # Create the flag image chart using the 'image_url' column
     flags = alt.Chart(plot_data).mark_image(
         width=15  # Adjust the width of the image as needed
     ).encode(
@@ -64,7 +67,7 @@ def draw_rank_chart(pd, rank=None):
     return combined_chart
 
 def draw_games_count_chart(pd, rank=None):
-    # Base value for the win rate baseline
+    # Calculate the base value for the games count baseline
     base_value = pd['games_count'].mean()
     plot_data = pd.sort_values(by='games_count', ascending=False)
     # Create a bar chart with bars extending from the baseline
@@ -74,8 +77,8 @@ def draw_games_count_chart(pd, rank=None):
         y2=alt.Y2('end:Q'),
         color=alt.condition(
             alt.datum.games_count >= base_value,
-            alt.value("green"),  # Color for win rates above the baseline
-            alt.value("red")  # Color for win rates below the baseline
+            alt.value("green"),
+            alt.value("red")
         ),
         tooltip=[
             alt.Tooltip(field='Civilization Name', type='nominal', title="Civilization"),
@@ -86,7 +89,7 @@ def draw_games_count_chart(pd, rank=None):
         end=f"datum.games_count >= {base_value} ? datum.games_count : {base_value} "
     ).interactive()
 
-    # Create the flag image chart using the new 'image_url' column
+    # Create the flag image chart using the 'image_url' column
     flags = alt.Chart(plot_data).mark_image(
         width=15  # Adjust the width of the image as needed
     ).encode(

@@ -9,6 +9,8 @@ import charts
 
 
 def refresh_data(rank = None):
+    # If rank is not given, refresh all data
+    # If rank is given, refresh the data of given rank
     solodata = dp.SoloData(refresh=False)
     rank_charts = {}
     games_count_charts = {}
@@ -19,7 +21,7 @@ def refresh_data(rank = None):
             games_count_charts[df] = charts.draw_games_count_chart(solodata.ranks_pd[df], df)
         # 导出为json文件
         for df in rank_charts:
-            rank_charts[df].save('rank_charts/rank_charts_' + df + '.json')
+            rank_charts[df].save('rank_charts/rank_charts_' + df + '.json')     # Save the charts as json file
         for df in games_count_charts:
             games_count_charts[df].save('games_count_charts/games_count_charts_' + df + '.json')
     else:

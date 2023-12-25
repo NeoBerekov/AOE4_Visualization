@@ -3,9 +3,14 @@ import requests
 import json
 
 
-# import plotly.express as px
+'''
+This module contains functions to refresh and get data from the API.
+If you dont want to read the code, just check the class Solodata below.
+'''
 def format_civ_name(civ_name):
+    # Format the civilization name from snake case to title case
     return civ_name.replace('_', ' ').title()
+
 def refresh_overall_solo_data():
     url = 'https://aoe4world.com/api/v0/stats/rm_solo/civilizations'
     response = requests.get(url)
@@ -274,6 +279,7 @@ def refresh_all_solo_data():
 
 
 class SoloData:
+    # The methods within are mostly deprecated, use the functions above instead
     def __init__(self, refresh=False):
         if refresh:
             self.refresh_all()
