@@ -299,6 +299,7 @@ class SoloData:
         # self.games_pd = get_games_data()
 
     def attach_image_url(self):
+        # Add a column with the image url of the civilization's flag
         for df in self.ranks_pd:
             self.ranks_pd[df]['image_url'] = self.ranks_pd[df]['civilization'].apply(lambda x: f'images/{x}.png')
 

@@ -1,8 +1,4 @@
 import data_process as dp
-import importlib
-import altair as alt
-import IPython
-import pandas as pd
 import charts
 
 

@@ -14,6 +14,8 @@ My Visualization course project.
 
 - Run `python3 app.py` in the main directory to start the back-end.
 - Open `index.html` in the `webapp` directory to start the front-end.
+- - If the Web app fails to show flags, its request may be blocked due to your browser's security policy. 
+- - - You can try to open it with a Vscode extension called **Live Server**.
 
 ## Structure
 ### Back-End

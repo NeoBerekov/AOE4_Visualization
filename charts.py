@@ -85,6 +85,7 @@ def draw_games_count_chart(pd, rank=None):
             alt.Tooltip(field='games_count', type='quantitative', title="Games Count")
         ]
     ).transform_calculate(
+        # Calculate the start and end values of the bars
         start=f"datum.games_count >= {base_value} ? {base_value}  : datum.games_count",
         end=f"datum.games_count >= {base_value} ? datum.games_count : {base_value} "
     ).interactive()
@@ -102,6 +103,7 @@ def draw_games_count_chart(pd, rank=None):
         ],
         url='image_url:N'
     ).transform_calculate(
+        # Make sure that the flag is shown at the correct position
         start=f"datum.games_count >= {base_value} ? {base_value}  : datum.games_count",
         end=f"datum.games_count >= {base_value} ? datum.games_count : {base_value} "
     )
